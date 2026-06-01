@@ -1,0 +1,10 @@
+- .NET projelerinde **OpenAI API** (ChatGPT, DALL·E, Whisper vb.) kullanımı
+- **Google Cloud Console** ve **Azure** AI servisleriyle entegrasyon
+- Metin **çeviri**, **özetleme** ve **duygu analizi** (sentiment analysis)
+- **OCR:** Tesseract, OpenAI OCR, Google Cloud Vision, Azure OCR ile görselden metin çıkarma
+- **Speech-to-Text** ve **Text-to-Speech** uygulamaları
+- **DALL·E** ile prompt’tan görsel üretimi
+- PDF, haber ve uzun metinlerin otomatik özetlenmesi
+- **Rapid API** üzerinden harici API’lerle çalışma
+- ASP.NET Core ile **REST API** oluşturma ve **API consume** etme
+- AI destekli chatbot ve içerik üretimi senaryoları
