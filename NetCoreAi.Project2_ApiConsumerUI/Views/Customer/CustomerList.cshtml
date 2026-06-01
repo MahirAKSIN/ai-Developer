@@ -1,0 +1,46 @@
+@model List<NetCoreAi.Project2_ApiConsumerUI.Dtos.ResultCustomerDto>
+@{
+    Layout = null;
+}
+<!doctype html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CustomerList</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <h1>CustomerList</h1>
+    @if (TempData["DeleteError"] is string deleteError && !string.IsNullOrWhiteSpace(deleteError))
+    {
+        <div class="alert alert-danger">@deleteError</div>
+    }
+
+    <div class="container">
+        <br /> <br />
+        <table class="table table-bordered">
+            <tr>
+                <td>#</td>
+                <td>Musteri Adi Soyadi</td>
+                <td>Musteri Bakiyesi</td>
+                <td>Sil</td>
+                <td>Guncelle</td>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.CustomerId</td>
+                    <td>@item.CustomerName @item.CustomerSurName</td>
+                    <td>@item.CustomerBalance</td>
+                    <td><a href="/Customer/DeleteCustomer/@item.CustomerId" class="btn btn-danger">Sil</a></td>
+                    <td><a href="/Customer/UpdateCustomer/@item.CustomerId" class="btn btn-success">Guncelle</a></td>
+                </tr>
+            }
+        </table>
+        <a  href="/Customer/CreateCustomer" class="btn btn-primary">Yeni Musteri Ekle</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
