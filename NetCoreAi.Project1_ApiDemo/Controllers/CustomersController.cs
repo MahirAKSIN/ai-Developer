@@ -22,9 +22,16 @@ namespace NetCoreAi.Project1_ApiDemo.Controllers
         [HttpPost]
         public IActionResult CustomerAdd(Customer customer)
         {
-            _apiContext.Customers.Add(customer);
+            var newCustomer = new Customer
+            {
+                CustomerName = customer.CustomerName,
+                CustomerSurName = customer.CustomerSurName,
+                CustomerBalance = customer.CustomerBalance
+            };
+
+            _apiContext.Customers.Add(newCustomer);
             _apiContext.SaveChanges();
-            return Ok(customer);
+            return Ok(newCustomer);
         }
         [HttpDelete("{DeleteCustomerId}")]
         public IActionResult DeleteCustomer(int DeleteCustomerId)
@@ -42,10 +49,18 @@ namespace NetCoreAi.Project1_ApiDemo.Controllers
         [HttpPut]
         public IActionResult PutCustomer(Customer customer)
         {
-            _apiContext.Customers.Update(customer);
-            _apiContext.SaveChanges();
-            return Ok(customer);
+            var existingCustomer = _apiContext.Customers.Find(customer.CustomerId);
 
+            if (existingCustomer == null)
+            {
+                return NotFound("Böyle musteri yok");
+            }
+
+            existingCustomer.CustomerName = customer.CustomerName;
+            existingCustomer.CustomerSurName = customer.CustomerSurName;
+            existingCustomer.CustomerBalance = customer.CustomerBalance;
+            _apiContext.SaveChanges();
+            return Ok(existingCustomer);
         }
         [HttpGet("{Id}")]
         public IActionResult CustomerFind(int Id)

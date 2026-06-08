@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NetCoreAi.Project2_ApiConsumerUI.Dtos;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System.Globalization;
 using System.Text;
 using System.Text.Json;
@@ -8,6 +9,10 @@ using System.Text.Json;
 public class CustomerController : Controller
 {
     private readonly IHttpClientFactory _httpClientFactory;
+    private static readonly JsonSerializerSettings JsonSettings = new()
+    {
+        ContractResolver = new CamelCasePropertyNamesContractResolver()
+    };
 
     public CustomerController(IHttpClientFactory httpClientFactory)
     {
@@ -74,7 +79,7 @@ public class CustomerController : Controller
         }
 
         var client = _httpClientFactory.CreateClient();
-        var jsonData = JsonConvert.SerializeObject(createCustomerDto);
+        var jsonData = JsonConvert.SerializeObject(createCustomerDto, JsonSettings);
         StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
         var responseMessage = await client.PostAsync("https://localhost:7169/api/Customers", stringContent);
 
@@ -114,7 +119,7 @@ public class CustomerController : Controller
         if (responseMessage.IsSuccessStatusCode)
         {
             var jsonData = await responseMessage.Content.ReadAsStringAsync();
-            var customer = JsonConvert.DeserializeObject<GetByIdCustomerDto>(jsonData);
+            var customer = JsonConvert.DeserializeObject<GetByIdCustomerDto>(jsonData, JsonSettings);
             if (customer == null)
             {
                 return View(new UpdateCustomerDto());
@@ -142,7 +147,7 @@ public class CustomerController : Controller
         }
 
         var client = _httpClientFactory.CreateClient();
-        var jsonData = JsonConvert.SerializeObject(updateCustomerDto);
+        var jsonData = JsonConvert.SerializeObject(updateCustomerDto, JsonSettings);
         StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
         var responseMessage = await client.PutAsync("https://localhost:7169/api/Customers", stringContent);
 
