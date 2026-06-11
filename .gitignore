@@ -361,3 +361,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Ses/video dosyalari (buyuk dosyalar repoya eklenmemeli)
+*.mp3
+*.mp4
+*.mp3.mp3
